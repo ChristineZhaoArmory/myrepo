@@ -1,126 +1,24 @@
 {
     "globals": {
-        "save_app_on_update": true
+      "save_app_on_update": true,
+      "env": "dev",
+      "dev_account": "christine-sa",
+      "dev_namespaceOverride": "christine-ns1",
+      "application_name": "eks-dinghytest"
     },
-    "application": "eks-dinghytest",
+    "application": "{{ var "application_name" }}",
     "pipelines": [
-    {
-     "application": "eks-dinghytest",
-     "name": "dev-pipeline-name",
-      "stages": [
-        {
-          "failPipeline": true,
-          "isNew": true,
-          "judgmentInputs": [],
-          "name": "Manual Judgment",
-          "notifications": [],
-          "refId": "2",
-          "requisiteStageRefIds": [],
-          "type": "manualJudgment"
-        },
-        {
-            "application": "eks-dinghytest",
-            "keepWaitingPipelines": false,
-            "limitConcurrent": true,
-            "name": "dinghymodule-1",
-            "stages": [
-                {{ module "wait.stage.module" }}
-            ],
-            "triggers": []
-        },{
-  "account": "christine-sa",
-  "cloudProvider": "kubernetes",
-  "manifests": [
-    {
-      "apiVersion": "apps/v1",
-      "kind": "Deployment",
-      "metadata": {
-        "name": "nginx"
-      },
-      "spec": {
-        "replicas": 1,
-        "selector": {
-          "matchLabels": {
-            "app": "nginx"
-          }
-        },
-        "strategy": {
-          "type": "Recreate"
-        },
-        "template": {
-          "metadata": {
-            "labels": {
-              "app": "nginx"
-            }
-          },
-          "spec": {
-            "containers": [
-              {
-                "image": "nginx",
-                "name": "nginx",
-                "resources": {
-                  "limits": {
-                    "cpu": "100m",
-                    "memory": "70Mi"
-                  },
-                  "requests": {
-                    "cpu": "10m",
-                    "memory": "70Mi"
-                  }
-                }
-              }
-            ]
-          }
-        }
-      }
-    },
-    {
-      "apiVersion": "v1",
-      "kind": "Service",
-      "metadata": {
-        "annotations": {
-          "service.beta.kubernetes.io/aws-load-balancer-type": "nlb"
-        },
-        "labels": {
-          "app": "nginx"
-        },
-        "name": "nginx",
-        "namespace": "default"
-      },
-      "spec": {
-        "externalTrafficPolicy": "Local",
-        "ports": [
-          {
-            "name": "http",
-            "port": 4567,
-            "protocol": "TCP",
-            "targetPort": 4567
-          }
+      {
+        "application": "{{ var "application_name" }}",
+        "name": "{{ var "env" }}-pipeline-name",
+        "keepWaitingPipelines": false,
+        "limitConcurrent": true,
+        "stages": [
+          {{ module "manualJudgment.stage.module" }},
+          {{ module "wait.stage.module" }},
+          {{ module "deploymanifest.stage.module" "triggerApp" (var "dev_account") "namespaceOverride" (var "dev_namespaceOverride") }}
         ],
-        "selector": {
-          "app": "nginx"
-        },
-        "type": "LoadBalancer"
-      }
-    }
-  ],
-  "moniker": {
-    "app": "four"
-  },
-  "name": "Deploy (Manifest)",
-  "namespaceOverride": "christine-ns1",
-  "skipExpressionEvaluation": false,
-  "source": "text",
-  "trafficManagement": {
-    "enabled": false,
-    "options": {
-      "enableTraffic": false,
-      "services": []
-    }
-  },
-  "type": "deployManifest"
-}
-      ]
+        "triggers": []
       }
     ]
-}
+  }
