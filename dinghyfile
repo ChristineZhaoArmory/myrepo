@@ -1,15 +1,34 @@
 {
-    "application": "dinghytest",
+    "globals": {
+        "save_app_on_update": true
+    },
+    "application": "eks-dinghytest",
     "pipelines": [
+    {
+     "application": "eks-dinghytest",
+     "name": "prod-pipeline-name",
+      "stages": [
         {
-            "application": "dinghytest",
+          "failPipeline": true,
+          "isNew": true,
+          "judgmentInputs": [],
+          "name": "Manual Judgment",
+          "notifications": [],
+          "refId": "2",
+          "requisiteStageRefIds": [],
+          "type": "manualJudgment"
+        },
+        {
+            "application": "eks-dinghytest",
             "keepWaitingPipelines": false,
             "limitConcurrent": true,
-            "name": "dinghymodule-tests",
+            "name": "dinghymodule-1",
             "stages": [
-                {{ module "dinghy-modules/wait.stage.module" }}
+                {{ module "wait.stage.module" }}
             ],
             "triggers": []
         }
+      ]
+      }
     ]
 }
