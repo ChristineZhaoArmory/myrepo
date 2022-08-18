@@ -6,7 +6,7 @@
     "pipelines": [
     {
      "application": "eks-dinghytest",
-     "name": "prod-pipeline-name",
+     "name": "dev-pipeline-name",
       "stages": [
         {
           "failPipeline": true,
