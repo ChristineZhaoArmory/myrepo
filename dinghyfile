@@ -1,1 +1,15 @@
-
+{
+    "application": "dinghytest",
+    "pipelines": [
+        {
+            "application": "dinghytest",
+            "keepWaitingPipelines": false,
+            "limitConcurrent": true,
+            "name": "dinghymodule-tests",
+            "stages": [
+                {{ module "dinghy-modules/wait.stage.module" }}
+            ],
+            "triggers": []
+        }
+    ]
+}
