@@ -1,34 +1,24 @@
 {
     "globals": {
-        "save_app_on_update": true
+      "save_app_on_update": true,
+      "env": "prod",
+      "dev_account": "christine-sa",
+      "dev_namespaceOverride": "christine-ns2",
+      "application_name": "eks-dinghytest"
     },
-    "application": "eks-dinghytest",
+    "application": "{{ var "application_name" }}",
     "pipelines": [
-    {
-     "application": "eks-dinghytest",
-     "name": "prod-pipeline-name",
-      "stages": [
-        {
-          "failPipeline": true,
-          "isNew": true,
-          "judgmentInputs": [],
-          "name": "Manual Judgment",
-          "notifications": [],
-          "refId": "2",
-          "requisiteStageRefIds": [],
-          "type": "manualJudgment"
-        },
-        {
-            "application": "eks-dinghytest",
-            "keepWaitingPipelines": false,
-            "limitConcurrent": true,
-            "name": "dinghymodule-1",
-            "stages": [
-                {{ module "wait.stage.module" }}
-            ],
-            "triggers": []
-        }
-      ]
+      {
+        "application": "{{ var "application_name" }}",
+        "name": "{{ var "env" }}-pipeline-name",
+        "keepWaitingPipelines": false,
+        "limitConcurrent": true,
+        "stages": [
+          {{ module "manualJudgment.stage.module" }},
+          {{ module "wait.stage.module" }},
+          {{ module "deploymanifest.stage.module" "triggerApp" (var "dev_account") "namespaceOverride" (var "dev_namespaceOverride") }}
+        ],
+        "triggers": []
       }
     ]
-}
+  }
