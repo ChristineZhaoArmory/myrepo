@@ -1,6 +1,9 @@
 {
   "globals": {
-    "save_app_on_update": true
+    "save_app_on_update": true,
+    "env": "dev",
+    "dev_account": "christine-sa",
+    "dev_namespaceOverride": "christine-ns1"
   },
   "application": "eks-dinghytest",
   "pipelines": [
@@ -11,7 +14,8 @@
       "limitConcurrent": true,
       "stages": [
         {{ module "manualJudgment.stage.module" }},
-        {{ module "wait.stage.module" }}
+        {{ module "wait.stage.module" }},
+        {{ module "deploymanifest.stage.module" "triggerApp" (var "dev_account") "namespaceOverride" (var "dev_namespaceOverride") }}
       ],
       "triggers": []
     }
