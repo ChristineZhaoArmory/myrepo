@@ -1,0 +1,24 @@
+{
+    "globals": {
+      "save_app_on_update": true,
+      "env": "dev",
+      "dev_account": "christine-sa",
+      "dev_namespaceOverride": "christine-ns1",
+      "application_name": "dev-dinghytest"
+    },
+    "application": "{{ var "application_name" }}",
+    "pipelines": [
+      {
+        "application": "{{ var "application_name" }}",
+        "name": "{{ var "env" }}-pipeline-name",
+        "keepWaitingPipelines": false,
+        "limitConcurrent": true,
+        "stages": [
+          {{ module "manualJudgment.stage.module" }},
+          {{ module "wait.stage.module" }},
+          {{ module "deploymanifest.stage.module" "triggerApp" (var "dev_account") "namespaceOverride" (var "dev_namespaceOverride") }}
+        ],
+        "triggers": []
+      }
+    ]
+  }
