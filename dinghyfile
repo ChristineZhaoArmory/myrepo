@@ -7,6 +7,7 @@
       "application_name": "eks-dinghytest"
     },
     "application": "{{ var "application_name" }}",
+    "env": "{{ var "env" }}",
     "pipelines": [
       {
         "application": "{{ var "application_name" }}",
