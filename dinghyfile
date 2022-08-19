@@ -15,7 +15,7 @@
         "limitConcurrent": true,
         "stages": [
           {{ module "manualJudgment.stage.module" }},
-          {{ module "wait.stage.module" "name" "wait 4" "waitTime" 5 }},
+          {{ module "wait.stage.module" "name" "wait 5" "waitTime" 5 }},
           {{ module "deploymanifest.stage.module" "triggerApp" (var "dev_account") "namespaceOverride" (var "dev_namespaceOverride") }}
         ],
         "triggers": []
