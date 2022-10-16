@@ -2,8 +2,8 @@
     "globals": {
       "save_app_on_update": true,
       "env": "dev",
-      "dev_account": "christine-sa",
-      "dev_namespaceOverride": "christine-ns1",
+      "dev_account": "christine-spin-sa",
+      "dev_namespaceOverride": "christine-rna",
       "application_name": "dev-dinghytest"
     },
     "application": "{{ var "application_name" }}",
@@ -19,7 +19,7 @@
           }},
           {{ module "wait.stage.module" 
                  "name" "MAIN MAIN wait 8"
-                 "waitTime" 5 
+                 "waitTime" 8 
           }},
           {{ module "deploymanifest.stage.module"
                  "triggerApp" (var "dev_account") 
