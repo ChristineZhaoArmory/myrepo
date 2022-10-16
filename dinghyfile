@@ -18,7 +18,7 @@
           {{ module "manualJudgment.stage.module" 
           }},
           {{ module "wait.stage.module" 
-                 "name" "MAIN MAIN wait 8"
+                 "name" "MAIN MAIN wait 11"
                  "waitTime" 8 
           }},
           {{ module "deploymanifest.stage.module"
