@@ -18,7 +18,7 @@
           {{ module "manualJudgment.stage.module" 
           }},
           {{ module "wait.stage.module" 
-                 "name" "PROD BRANCH wait 21"
+                 "name" "PROD BRANCH wait 20"
                  "waitTime" 5 
           }},
           {{ module "deploymanifest.stage.module"
