@@ -7,7 +7,6 @@
       "application_name": "dev-dinghytest"
     },
     "application": "{{ var "application_name" }}",
-    "disabled": true,
     "pipelines": [
       {
         "application": "{{ var "application_name" }}",
@@ -20,7 +19,7 @@
           {{ module "manualJudgment.stage.module" 
           }},
           {{ module "wait.stage.module" 
-                 "name" "myrepo DEV BRANCH wait 49"
+                 "name" "myrepo DEV BRANCH wait 50"
                  "waitTime" 4 
           }},
           {{ module "deploymanifest.stage.module"
