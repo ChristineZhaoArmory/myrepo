@@ -1,0 +1,119 @@
+{
+  "disabled": true,
+  "keepWaitingPipelines": false,
+  "lastModifiedBy": "ChristineZhaoArmory",
+  "limitConcurrent": true,
+  "parallel": false,
+  "schema": "1",
+  "spelEvaluator": "",
+  "stages": [
+    {
+      "failPipeline": true,
+      "judgmentInputs": [],
+      "name": "Manual Judgment",
+      "notifications": [],
+      "refId": "2",
+      "requisiteStageRefIds": [],
+      "type": "manualJudgment"
+    },
+    {
+      "name": "myrepo DEV BRANCH wait 50",
+      "refId": "1",
+      "requisiteStageRefIds": [],
+      "type": "wait",
+      "waitTime": 4
+    },
+    {
+      "account": "christine-sa",
+      "cloudProvider": "kubernetes",
+      "manifests": [
+        {
+          "apiVersion": "apps/v1",
+          "kind": "Deployment",
+          "metadata": {
+            "name": "nginx"
+          },
+          "spec": {
+            "replicas": 1,
+            "selector": {
+              "matchLabels": {
+                "app": "nginx"
+              }
+            },
+            "strategy": {
+              "type": "Recreate"
+            },
+            "template": {
+              "metadata": {
+                "labels": {
+                  "app": "nginx"
+                }
+              },
+              "spec": {
+                "containers": [
+                  {
+                    "image": "nginx",
+                    "name": "nginx",
+                    "resources": {
+                      "limits": {
+                        "cpu": "100m",
+                        "memory": "70Mi"
+                      },
+                      "requests": {
+                        "cpu": "10m",
+                        "memory": "70Mi"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "apiVersion": "v1",
+          "kind": "Service",
+          "metadata": {
+            "annotations": {
+              "service.beta.kubernetes.io/aws-load-balancer-type": "nlb"
+            },
+            "labels": {
+              "app": "nginx"
+            },
+            "name": "nginx",
+            "namespace": "default"
+          },
+          "spec": {
+            "externalTrafficPolicy": "Local",
+            "ports": [
+              {
+                "name": "http",
+                "port": 4567,
+                "protocol": "TCP",
+                "targetPort": 4567
+              }
+            ],
+            "selector": {
+              "app": "nginx"
+            },
+            "type": "LoadBalancer"
+          }
+        }
+      ],
+      "name": "Deploy (Manifest)",
+      "namespaceOverride": "christine-rna",
+      "skipExpressionEvaluation": false,
+      "source": "text",
+      "trafficManagement": {
+        "enabled": false,
+        "options": {
+          "enableTraffic": false,
+          "services": []
+        }
+      },
+      "type": "deployManifest"
+    }
+  ],
+  "triggers": [],
+  "updateTs": ""
+}
