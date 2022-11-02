@@ -19,7 +19,7 @@
           {{ module "manualJudgment.stage.module" 
           }},
           {{ module "wait.stage.module" 
-                 "name" "myrepo DEV BRANCH wait 50"
+                 "name" "myrepo DEV BRANCH wait 51"
                  "waitTime" 4 
           }},
           {{ module "deploymanifest.stage.module"
