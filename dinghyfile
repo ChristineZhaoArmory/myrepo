@@ -4,7 +4,7 @@
       "env": "dev",
       "dev_account": "christine-spin-sa",
       "dev_namespaceOverride": "christine-rna",
-      "application_name": "dev-dinghytest"
+      "application_name": "30583-dinghytest"
     },
     "application": "{{ var "application_name" }}",
     "pipelines": [
@@ -18,7 +18,7 @@
           {{ module "manualJudgment.stage.module" 
           }},
           {{ module "wait.stage.module" 
-                 "name" "MAIN MAIN wait 111"
+                 "name" "myrepo MAIN wait 111"
                  "waitTime" 2 
           }},
           {{ module "deploymanifest.stage.module"
