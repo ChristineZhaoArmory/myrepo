@@ -4,7 +4,7 @@
       "env": "dev",
       "dev_account": "christine-spin-sa",
       "dev_namespaceOverride": "christine-rna",
-      "application_name": "dev-dinghytest"
+      "application_name": "30583-dinghytest"
     },
     "application": "{{ var "application_name" }}",
     "pipelines": [
