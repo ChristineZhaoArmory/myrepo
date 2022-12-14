@@ -18,7 +18,7 @@
           {{ module "manualJudgment.stage.module" 
           }},
           {{ module "wait.stage.module" 
-                 "name" "myrepo MAIN wait 1"
+                 "name" "myrepo MAIN wait 2"
                  "waitTime" 2 
           }},
           {{ module "deploymanifest.stage.module"
